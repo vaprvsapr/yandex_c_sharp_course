@@ -7,14 +7,14 @@ public class EventService(IEventRepository eventRepository) : IEventService
 {
     private readonly IEventRepository _eventRepository = eventRepository;
 
-    public void CreateEvent(Event newEvent)
+    public bool CreateEvent(Event newEvent)
     {
-        _eventRepository.Add(newEvent);
+        return _eventRepository.Add(newEvent);
     }
 
-    public void DeleteEvent(Guid id)
+    public bool DeleteEvent(Guid id)
     {
-        _eventRepository.Delete(id);
+        return _eventRepository.Delete(id);
     }
 
     public IReadOnlyCollection<Event> GetAllEvents()
@@ -27,8 +27,8 @@ public class EventService(IEventRepository eventRepository) : IEventService
         return _eventRepository.GetById(id);
     }
 
-    public void UpdateEvent(Event updatedEvent)
+    public bool UpdateEvent(Event updatedEvent)
     {
-        _eventRepository.Update(updatedEvent);
+        return _eventRepository.Update(updatedEvent);
     }
 }

@@ -6,7 +6,7 @@ public interface IEventRepository
 {
     Event? GetById(Guid id);
     IReadOnlyCollection<Event> GetAll();
-    void Add(Event newEvent);
-    void Update(Event updatedEvent);
-    void Delete(Guid id);
+    bool Add(Event newEvent);
+    bool Update(Event updatedEvent);
+    bool Delete(Guid id);
 }

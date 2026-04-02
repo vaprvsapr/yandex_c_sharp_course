@@ -6,17 +6,26 @@ namespace EventManager.Data;
 public class EventRepository : IEventRepository
 {
     private readonly List<Event> _events = [];
-    public void Add(Event newEvent)
+    public bool Add(Event newEvent)
     {
-        // Добавить проверку на уникальность ID, если необходимо
-        _events.Add(newEvent);
+        var existingEvent = _events.FirstOrDefault(e => e.Id == newEvent.Id);
+        if (existingEvent == null)
+        {
+            _events.Add(newEvent);
+            return true;
+        }
+        return false;
     }
 
-    public void Delete(Guid id)
+    public bool Delete(Guid id)
     {
-        var eventToDelete = _events.FirstOrDefault(e => e.Id == id);
-        if (eventToDelete != null)
-            _events.Remove(eventToDelete);
+        var existingEvent = _events.FirstOrDefault(e => e.Id == id);
+        if (existingEvent != null)
+        {
+            _events.Remove(existingEvent);
+            return true;
+        }
+        return false;
     }
 
     public IReadOnlyCollection<Event> GetAll()
@@ -29,8 +38,14 @@ public class EventRepository : IEventRepository
         return _events.FirstOrDefault(e => e.Id == id);
     }
 
-    public void Update(Event updatedEvent)
+    public bool Update(Event updatedEvent)
     {
-        throw new NotImplementedException();
+        var existingEvent = _events.FirstOrDefault(e => e.Id == updatedEvent.Id);
+        if (existingEvent != null)
+        {
+            existingEvent = updatedEvent;
+            return true;
+        }
+        return false;
     }
 }

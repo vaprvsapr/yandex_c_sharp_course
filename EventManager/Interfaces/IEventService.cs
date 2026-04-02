@@ -6,7 +6,7 @@ public interface IEventService
 {
     public Event? GetEvent(Guid id);
     public IReadOnlyCollection<Event> GetAllEvents();
-    public void CreateEvent(Event newEvent);
-    public void UpdateEvent(Event updatedEvent);
-    public void DeleteEvent(Guid id);
+    public bool CreateEvent(Event newEvent);
+    public bool UpdateEvent(Event updatedEvent);
+    public bool DeleteEvent(Guid id);
 }
