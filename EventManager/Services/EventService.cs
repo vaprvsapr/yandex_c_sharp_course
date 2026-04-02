@@ -12,7 +12,7 @@ public class EventService(IEventRepository eventRepository) : IEventService
         return _eventRepository.Add(newEvent);
     }
 
-    public bool DeleteEvent(Guid id)
+    public bool DeleteEvent(int id)
     {
         return _eventRepository.Delete(id);
     }
@@ -22,13 +22,13 @@ public class EventService(IEventRepository eventRepository) : IEventService
         return _eventRepository.GetAll();
     }
 
-    public Event? GetEvent(Guid id)
+    public Event? GetEvent(int id)
     {
         return _eventRepository.GetById(id);
     }
 
-    public bool UpdateEvent(Event updatedEvent)
+    public bool UpdateEvent(int id, Event updatedEvent)
     {
-        return _eventRepository.Update(updatedEvent);
+        return _eventRepository.Update(id, updatedEvent);
     }
 }

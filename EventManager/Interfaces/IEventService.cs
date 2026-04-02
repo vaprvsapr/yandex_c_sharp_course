@@ -4,9 +4,9 @@ namespace EventManager.Interfaces;
 
 public interface IEventService
 {
-    public Event? GetEvent(Guid id);
+    public Event? GetEvent(int id);
     public IReadOnlyCollection<Event> GetAllEvents();
     public bool CreateEvent(Event newEvent);
-    public bool UpdateEvent(Event updatedEvent);
-    public bool DeleteEvent(Guid id);
+    public bool UpdateEvent(int id, Event updatedEvent);
+    public bool DeleteEvent(int id);
 }

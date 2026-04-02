@@ -17,7 +17,7 @@ public class EventRepository : IEventRepository
         return false;
     }
 
-    public bool Delete(Guid id)
+    public bool Delete(int id)
     {
         var existingEvent = _events.FirstOrDefault(e => e.Id == id);
         if (existingEvent != null)
@@ -33,14 +33,14 @@ public class EventRepository : IEventRepository
         return _events.AsReadOnly();
     }
 
-    public Event? GetById(Guid id)
+    public Event? GetById(int id)
     {
         return _events.FirstOrDefault(e => e.Id == id);
     }
 
-    public bool Update(Event updatedEvent)
+    public bool Update(int id, Event updatedEvent)
     {
-        var existingEvent = _events.FirstOrDefault(e => e.Id == updatedEvent.Id);
+        var existingEvent = _events.FirstOrDefault(e => e.Id == id);
         if (existingEvent != null)
         {
             existingEvent = updatedEvent;

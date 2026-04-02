@@ -14,18 +14,19 @@ public class EventController(IEventService eventService) : ControllerBase
     [HttpGet]
     public ApiResult<IReadOnlyCollection<Event>> GetAllEvents()
     {
+        var events = _eventService.GetAllEvents();
         return new ApiResult<IReadOnlyCollection<Event>>
         {
-            Data = _eventService.GetAllEvents(),
+            Data = events,
             Success = true,
             StatusCode = HttpStatusCode.OK,
-            Message = "Получаем все события",
+            Message = $"Получено событий: {events.Count}",
             DateTime = DateTime.Now,
         };
     }
 
-    [HttpGet("{id:Guid}")]
-    public ApiResult<Event?> GetEventById([FromRoute] Guid id)
+    [HttpGet("{id:int}")]
+    public ApiResult<Event?> GetEventById([FromRoute] int id)
     {
         var eventById = _eventService.GetEvent(id);
         return new ApiResult<Event?>
@@ -51,10 +52,10 @@ public class EventController(IEventService eventService) : ControllerBase
         };
     }
 
-    [HttpPut("{id:Guid}")]
-    public ApiResult PutEvent([FromRoute] Guid id, [FromBody] Event updatedEvent)
+    [HttpPut("{id:int}")]
+    public ApiResult PutEvent([FromRoute] int id, [FromBody] Event updatedEvent)
     {
-        var isUpdated = _eventService.UpdateEvent(updatedEvent);
+        var isUpdated = _eventService.UpdateEvent(id, updatedEvent);
         return new ApiResult
         {
             Success = isUpdated,
@@ -64,8 +65,8 @@ public class EventController(IEventService eventService) : ControllerBase
         };
     }
 
-    [HttpDelete("{id:Guid}")]
-    public ApiResult Delete([FromRoute] Guid id)
+    [HttpDelete("{id:int}")]
+    public ApiResult Delete([FromRoute] int id)
     {
         var isDeleted = _eventService.DeleteEvent(id);
         return new ApiResult
