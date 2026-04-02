@@ -12,6 +12,13 @@ public class EventRepository : IEventRepository
         _events.Add(newEvent);
     }
 
+    public void Delete(Guid id)
+    {
+        var eventToDelete = _events.FirstOrDefault(e => e.Id == id);
+        if (eventToDelete != null)
+            _events.Remove(eventToDelete);
+    }
+
     public IReadOnlyCollection<Event> GetAll()
     {
         return _events.AsReadOnly();

@@ -6,9 +6,15 @@ namespace EventManager.Services;
 public class EventService(IEventRepository eventRepository) : IEventService
 {
     private readonly IEventRepository _eventRepository = eventRepository;
+
     public void CreateEvent(Event newEvent)
     {
         _eventRepository.Add(newEvent);
+    }
+
+    public void DeleteEvent(Guid id)
+    {
+        _eventRepository.Delete(id);
     }
 
     public IReadOnlyCollection<Event> GetAllEvents()

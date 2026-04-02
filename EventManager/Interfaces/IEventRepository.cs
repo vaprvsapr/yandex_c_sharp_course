@@ -8,4 +8,5 @@ public interface IEventRepository
     IReadOnlyCollection<Event> GetAll();
     void Add(Event newEvent);
     void Update(Event updatedEvent);
+    void Delete(Guid id);
 }
