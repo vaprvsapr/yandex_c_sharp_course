@@ -1,18 +1,10 @@
-using EventManager.Interfaces;
-using EventManager.Services;
-using EventManager.Data;
+using EventManager.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi();
-builder.Services.AddSingleton<IEventRepository, EventRepository>();
-builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddInfrastructure();
+builder.Services.AddVisualization();
 builder.Services.AddControllers();
-
-// Регистрация Swagger для документации API
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 
