@@ -9,7 +9,7 @@ public class EventService(IEventRepository eventRepository) : IEventService
 
     public bool CreateEvent(EventDto newEventDto)
     {
-        return _eventRepository.Add(newEventDto.ToEvent());
+        return _eventRepository.Add(EventDto.ToEvent(newEventDto));
     }
 
     public bool DeleteEvent(int id)
@@ -19,16 +19,17 @@ public class EventService(IEventRepository eventRepository) : IEventService
 
     public IReadOnlyCollection<EventDto> GetAllEvents()
     {
-        return _eventRepository.GetAll().Select(e => e.ToEventDto()).ToList().AsReadOnly();
+        return _eventRepository.GetAll().Select(EventDto.ToEventDto).ToList().AsReadOnly();
     }
 
     public EventDto? GetEvent(int id)
     {
-        return _eventRepository.GetById(id)?.ToEventDto();
+        var eventById = _eventRepository.GetById(id);
+        return eventById == null ? null : EventDto.ToEventDto(eventById);
     }
 
     public bool UpdateEvent(int id, EventDto updatedEventDto)
     {
-        return _eventRepository.Update(id, updatedEventDto.ToEvent());
+        return _eventRepository.Update(id, EventDto.ToEvent(updatedEventDto));
     }
 }
