@@ -7,15 +7,15 @@ namespace EventManager.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class EventController(IEventService eventService) : ControllerBase
+public class EventsController(IEventService eventService) : ControllerBase
 {
     private readonly IEventService _eventService = eventService;
 
     [HttpGet]
-    public ApiResult<IReadOnlyCollection<Event>> GetAllEvents()
+    public ApiResult<IReadOnlyCollection<EventDto>> GetAllEvents()
     {
         var events = _eventService.GetAllEvents();
-        return new ApiResult<IReadOnlyCollection<Event>>
+        return new ApiResult<IReadOnlyCollection<EventDto>>
         {
             Data = events,
             Success = true,
@@ -26,10 +26,10 @@ public class EventController(IEventService eventService) : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public ApiResult<Event?> GetEventById([FromRoute] int id)
+    public ApiResult<EventDto?> GetEventById([FromRoute] int id)
     {
         var eventById = _eventService.GetEvent(id);
-        return new ApiResult<Event?>
+        return new ApiResult<EventDto?>
         {
             Data = eventById,
             Success = eventById != null,
@@ -40,26 +40,26 @@ public class EventController(IEventService eventService) : ControllerBase
     }
 
     [HttpPost]
-    public ApiResult PostEvent([FromBody] Event newEvent)
+    public ApiResult PostEvent([FromBody] EventDto newEvent)
     {
         var isPosted = _eventService.CreateEvent(newEvent);
         return new ApiResult
         {
             Success = isPosted,
-            StatusCode = isPosted ? HttpStatusCode.Created : HttpStatusCode.BadRequest,
+            StatusCode = isPosted ? HttpStatusCode.Created : HttpStatusCode.NotFound,
             Message = isPosted ? $"Создано событие с id: {newEvent.Id}" : $"Не удалось создать событие с id: {newEvent.Id}",
             DateTime = DateTime.Now,
         };
     }
 
     [HttpPut("{id:int}")]
-    public ApiResult PutEvent([FromRoute] int id, [FromBody] Event updatedEvent)
+    public ApiResult PutEvent([FromRoute] int id, [FromBody] EventDto updatedEvent)
     {
         var isUpdated = _eventService.UpdateEvent(id, updatedEvent);
         return new ApiResult
         {
             Success = isUpdated,
-            StatusCode = isUpdated ? HttpStatusCode.Created : HttpStatusCode.BadRequest,
+            StatusCode = isUpdated ? HttpStatusCode.OK : HttpStatusCode.NotFound,
             Message = isUpdated ? $"Обновлено событие с id: {id}" : $"Не найдено событие с id: {id}",
             DateTime = DateTime.Now,
         };
@@ -72,7 +72,7 @@ public class EventController(IEventService eventService) : ControllerBase
         return new ApiResult
         {
             Success = isDeleted,
-            StatusCode = isDeleted ? HttpStatusCode.NoContent : HttpStatusCode.BadRequest,
+            StatusCode = isDeleted ? HttpStatusCode.NoContent : HttpStatusCode.NotFound,
             Message = isDeleted ? $"Удалено событие с id: {id}" : $"Не найдено событие с id: {id}",
             DateTime = DateTime.Now,
         };

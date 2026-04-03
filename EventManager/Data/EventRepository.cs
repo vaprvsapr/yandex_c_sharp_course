@@ -43,7 +43,10 @@ public class EventRepository : IEventRepository
         var existingEvent = _events.FirstOrDefault(e => e.Id == id);
         if (existingEvent != null)
         {
-            existingEvent = updatedEvent;
+            existingEvent.Title = updatedEvent.Title;
+            existingEvent.Description = updatedEvent.Description;
+            existingEvent.StartAt = updatedEvent.StartAt;
+            existingEvent.EndAt = updatedEvent.EndAt;
             return true;
         }
         return false;
