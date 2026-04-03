@@ -2,28 +2,48 @@
 
 namespace EventManager.Models;
 
-// Класс ApiResult c возвращаемыми данными
-// Наследуемся от базового класса с основными параметрами
+/// <summary>
+/// Класс ApiResult c возвращаемыми данными
+/// Наследуемся от базового класса с основными параметрами
+/// </summary>
+/// <typeparam name="T">Тип возвращаемых данных</typeparam>
 public class ApiResult<T> : ApiBaseResult
 {
-    // Возвращаемые данные метода
+    /// <summary>
+    /// Возвращаемые данные метода
+    /// </summary>
     public required T Data { get; set; }
 }
 
-// Класс ApiResult без возвращаемых данных
-// Наследуемся от базового класса с основными параметрами
+/// <summary>
+/// Класс ApiResult без возвращаемых данных
+/// Наследуемся от базового класса с основными параметрами
+/// </summary>
 public class ApiResult : ApiBaseResult { }
 
-// Базовый класс с основными параметрами
+/// <summary>
+/// Базовый класс с основными возвращаемыми параметрами
+/// </summary>
 public class ApiBaseResult
 {
-    // Флаг, указывающий на успешность выполненного запроса
+    /// <summary>
+    /// Флаг, указывающий на успешность выполненного запроса
+    /// </summary>
     public required bool Success { get; set; }
-    // Возвращаемый HTTP-код
+
+    /// <summary>
+    /// Возвращаемый HTTP-код
+    /// </summary>
     public required HttpStatusCode StatusCode { get; set; }
-    // Дата и время ответа
+    
+    /// <summary>
+    /// Дата и время ответа
+    /// </summary>
     public DateTime DateTime { get; set; } = DateTime.UtcNow;
-    // Кастомное сообщение с дополнительной информацией
-    // Здесь может быть информация об ошибке в случае неуспеха
+
+    /// <summary>
+    /// Кастомное сообщение с дополнительной информацией
+    /// Здесь может быть информация об ошибке в случае неуспеха
+    /// </summary>
     public required string Message { get; set; }
 }

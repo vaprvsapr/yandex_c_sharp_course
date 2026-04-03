@@ -3,9 +3,12 @@ using EventManager.Models;
 
 namespace EventManager.Data;
 
+/// <inheritdoc/>
 public class EventRepository : IEventRepository
 {
     private readonly List<Event> _events = [];
+
+    /// <inheritdoc />
     public bool Add(Event newEvent)
     {
         var existingEvent = _events.FirstOrDefault(e => e.Id == newEvent.Id);
@@ -17,6 +20,7 @@ public class EventRepository : IEventRepository
         return false;
     }
 
+    /// <inheritdoc />
     public bool Delete(int id)
     {
         var existingEvent = _events.FirstOrDefault(e => e.Id == id);
@@ -28,16 +32,19 @@ public class EventRepository : IEventRepository
         return false;
     }
 
+    /// <inheritdoc />
     public IReadOnlyCollection<Event> GetAll()
     {
         return _events.AsReadOnly();
     }
 
+    /// <inheritdoc />
     public Event? GetById(int id)
     {
         return _events.FirstOrDefault(e => e.Id == id);
     }
 
+    /// <inheritdoc />
     public bool Update(int id, Event updatedEvent)
     {
         var existingEvent = _events.FirstOrDefault(e => e.Id == id);
